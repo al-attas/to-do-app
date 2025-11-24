@@ -25,7 +25,7 @@ jobs:
           REPOSITORY: Todo_app
           IMAGE_TAG: latest
         run:
-            docker build -t ${{secrets.TOCKEN_DOCKER_HUB}}/$REPOSITORY:$IMAGE_TAG
+            docker build -t ${{secrets.TOCKEN_DOCKER_HUB}}/$REPOSITORY:$IMAGE_TAG .
             docker push ${{secrets.TOCKEN_DOCKER_HUB}}/$REPOSITORY:$IMAGE_TAG
 
 
