@@ -1,0 +1,33 @@
+name: todo_app_CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu:latest
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v6.0.0
+
+      - name: log in to docker hub
+        uses: docker/login-action@v3.6.0
+        with:
+          username: ${{secrets.TOCKEN_DOCKER_HUB}}
+          password: ${{secrets.USER_NAME_DOCKER_HUB}}
+
+      - name: build and push Docker image
+        env:
+          REPOSITORY: Todo_app
+          IMAGE_TAG: latest
+        run:
+            docker build -t ${{secrets.TOCKEN_DOCKER_HUB}}/$REPOSITORY:$IMAGE_TAG
+            docker push ${{secrets.TOCKEN_DOCKER_HUB}}/$REPOSITORY:$IMAGE_TAG
+
+
+
+
