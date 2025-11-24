@@ -30,5 +30,5 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.USER_NAME_DOCKER_HUB }}/$REPOSITORY:$IMAGE_TAG
+          docker push ${{ secrets.TOCKEN_DOCKER_HUB}}/$REPOSITORY:$IMAGE_TAG
 
