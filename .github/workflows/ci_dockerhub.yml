@@ -26,6 +26,8 @@ jobs:
           IMAGE_TAG: latest
         run:
             docker build -t ${{secrets.USER_NAME_DOCKER_HUB}}}/$REPOSITORY:$IMAGE_TAG .
+      - name: push Docker hub
+        run:
             docker push ${{secrets.USER_NAME_DOCKER_HUB}}}/$REPOSITORY:$IMAGE_TAG
 
 
