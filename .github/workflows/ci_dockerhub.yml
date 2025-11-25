@@ -1,3 +1,39 @@
+# name: todo_app_CI
+
+# on:
+#   push:
+#     branches: [main]
+#   pull_request:
+#     branches: [main]
+
+# jobs:
+#   build-and-push:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: checkout code
+#         uses: actions/checkout@v6.0.0
+
+#       - name: log in to docker hub
+#         uses: docker/login-action@v3.6.0
+#         with:
+#           username: ${{secrets.DOCKERNAME}} 
+#           password: ${{secrets.DOCKERTOKEN}}
+      
+#         env:
+#           REPOSITORY: python
+#           IMAGE_TAG: latest
+      
+#       - name: Build Docker image
+#         run: |
+#           docker build -t ${{secrets.DOCKERNAME}}/$REPOSITORY:$IMAGE_TAG .
+
+#       - name: Push Docker image
+#         run: |
+#           docker push ${{secrets.DOCKERNAME}}/$REPOSITORY:$IMAGE_TAG
+
+
+
 name: todo_app_CI
 
 on:
@@ -10,25 +46,24 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v6.0.0
+    env:
+      REPOSITORY: python
+      IMAGE_TAG: latest
 
-      - name: log in to docker hub
-        uses: docker/login-action@v3.6.0
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
         with:
-          username: ${{secrets.DOCKERNAME}} 
-          password: ${{secrets.DOCKERTOKEN}}
-      
-        env:
-          REPOSITORY: python
-          IMAGE_TAG: latest
-      
+          username: ${{ secrets.DOCKERNAME }}
+          password: ${{ secrets.DOCKERTOKEN }}
+
       - name: Build Docker image
         run: |
-          docker build -t ${{secrets.DOCKERNAME}}/$REPOSITORY:$IMAGE_TAG .
+          docker build -t ${{ secrets.DOCKERNAME }}/$REPOSITORY .
 
       - name: Push Docker image
         run: |
-          docker push ${{secrets.DOCKERNAME}}/$REPOSITORY:$IMAGE_TAG
-
+          docker push ${{ secrets.DOCKERNAME }}/$REPOSITORY:$IMAGE_TAG
